@@ -1,0 +1,125 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 24, 2016, 8:28:32 PM
+    Author     : david
+*/
+
+#background {
+   position: absolute;
+   top: 45vh;
+   left: -50vw;
+   width: 100vh;
+   z-index: -10;
+   overflow: hidden;
+   font-size: 10vmin;
+   transform: rotate(90deg);
+   opacity: 0.05;
+}
+
+.container {
+  display: none;
+/*  display:flex;*/
+  justify-content:center;
+}
+
+allBlocks, container {
+  display: fit-content;
+  /*display: none;*/
+}
+.containerTop > div, .containerBottom > div {
+  margin:0px;
+  background-color:#bada55;
+  height: 200px;
+}
+.containerTop > div:nth-child(2), .containerBottom > div:nth-child(2)  {
+background-color:#ba55da;
+}
+.containerMid > div:nth-child(2) {
+background-color:#404040;
+}
+.containerMid > div {
+  margin:0px;
+  background-color:#55bada;
+  height: 100px;
+}
+.first, .third {
+  width:200px;
+}
+.second {
+  width:100px;
+  color: red;
+}
+
+.center {
+  justify-content:center;
+}
+
+.whosIsBeeping {
+  display: table-row; 
+  width: 750px;
+  height: 362px;
+}
+
+@font-face {
+    font-family: 'Rock Salt';
+    src: url(http://fonts.googleapis.com/css?family=Rock+Salt);
+}
+
+h2 {}
+
+p {
+  font-family: 'Rock Salt';  
+  font-size: 14px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.birdLeft {
+  display: block;
+  position: absolute;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  float: left;
+  left: 44%;
+  top: 290px;
+  width: 100px;
+  height: 82px;
+  background: url(bunting-dark-orange-silhouette.svg);
+  background-size: 100px 82px;  
+}
+
+.birdMiddle {
+  display: block;
+  position: absolute;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  float: left;
+  left: 45%;
+  width: 100px;
+  height: 82px;
+  background: url(chickadee-black-silhouette.svg);
+  background-size: 100px 82px;
+}
+
+.birdRight {
+  display: block;
+  position: absolute;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  float: left;
+  left: 53%;
+  top: 290px;
+  width: 100px;
+  height: 82px;
+  background: url(robin-lime-green-silhouette.svg);
+  background-size: 100px 82px;  
+}
