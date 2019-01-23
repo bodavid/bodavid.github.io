@@ -10,10 +10,27 @@ and open the template in the editor.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./gdft.js"></script>
+    <style>
+      td {
+        border: 1px solid graytext;
+      }
+    </style>
 
   </head>
   <body>
     <div>Beryllium 10</div>
+    <div>Paste data to be analyzed in the black box below. Pasting data copied from Excel is OK.</div>
+    <div id="counts" style="border: 3px solid black;" contenteditable></div>
+    <div style="border: 4px dotted red;" >
+      Orthogonality matrix
+    </div>
+    <div style="border: 3px solid green;" >
+      <table id="ortogonalityTable"></table>
+    </div>
+    <div style="margin-bottom: 19px;"></div>
+    <div style="border: 4px dotted red;" >
+      Frequency bars (x value, scalar amplitude)
+    </div>
     <div id="frequencies"></div>
     <div id="frequenciesBars" style=';'></div>
   </body>
