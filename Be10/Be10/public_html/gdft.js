@@ -141,9 +141,13 @@ window.onload = (event) => {
     [153.1, 1.37]
   ];
 
-  document.querySelector('#counts').addEventListener("input", (event) => {
-    document.querySelector('#counts').innerText.split("\n").map(value => value.split(/\s*/).map(value2 => parseFloat(value2)))
-
+  let countsIn, countsOut;
+  document.querySelector('#countsIn').addEventListener("input", (event) => {
+    countsIn = document.querySelector('#countsIn').innerText.split("\n").map(value => value.split(/\s*/).map(value2 => parseFloat(value2)))
+    countsOut = "<pre>" +
+            countsIn.join("\n") +
+            "</pre>";
+    document.querySelector('#countsProcessed').innerHTML = countsOut;
   });
 
   let gdftMatrix = [[[]]],
@@ -162,6 +166,8 @@ window.onload = (event) => {
 
   let ortogonality = [[]], rowSum;
   let ortogonalityTable = "";
+  let ortogonalityAmplitude;
+  let ortogonalityAmplitudeColor;
   for (let i = 0; i < counts.length; i++) {
     ortogonality[i] = [];
     ortogonalityTable += `<tr>`;
@@ -179,7 +185,9 @@ window.onload = (event) => {
       }
 //      ortogonality[i][j] < 0 && console.info('negative! ', i, " ", j);
 //      ortogonality[i][j][0] = Math.sqrt(ortogonality[i][j][0]/Math.sqrt(counts.length);
-      ortogonalityTable += `<td>${ortogonality[i][j][0].toPrecision(3)} + ${ortogonality[i][j][1].toPrecision(3)}i</td>`;
+      ortogonalityAmplitude = Math.sqrt(ortogonality[i][j][0] * ortogonality[i][j][0] + ortogonality[i][j][1] * ortogonality[i][j][1]);
+      ortogonalityAmplitudeColor = Math.round(ortogonalityAmplitude*255);
+      ortogonalityTable += `<td style="background-color: rgba(${255 - ortogonalityAmplitudeColor},${ortogonalityAmplitudeColor}, 0, 1)">${ortogonality[i][j][0].toPrecision(3)} + ${ortogonality[i][j][1].toPrecision(3)}i</td>`;
 //      gdftMatrix[i][j];
     }
     ortogonalityTable += `</tr>\n`;

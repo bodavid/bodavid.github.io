@@ -18,11 +18,16 @@ and open the template in the editor.
 
   </head>
   <body>
-    <div>Beryllium 10</div>
-    <div>Paste data to be analyzed in the black box below. Pasting data copied from Excel is OK.</div>
-    <div id="counts" style="border: 3px solid black;" contenteditable></div>
+    <div>
+      <h1>Fourier transform for unevenly sampled data</h1>
+    </div>
+    <div>Paste data to be analyzed in the black box below. Pasting data copied from Excel is OK.Ensure that the values in the right box are interpreted correctly.</div>
+    <div id="countsIn" style="border: 3px solid black; width: 48%; display: inline-block;" contenteditable></div>
+    <div id="countsProcessed" style="border: 4px dotted blue; width: 48%; display: inline-block;"></div>
     <div style="border: 4px dotted red;" >
-      Orthogonality matrix
+      <h3>Orthogonality matrix</h3>. 
+      Basis vectors scalar multiplied. Green means no ortogonlity ( = 1). Full red means full ortogonality ( = 0).
+      An ideal Fourier transform has green on the diagonals and zero everywhere else.
     </div>
     <div style="border: 3px solid green;" >
       <table id="ortogonalityTable"></table>
