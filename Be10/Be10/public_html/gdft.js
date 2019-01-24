@@ -7,7 +7,7 @@
 
 window.onload = (event) => {
 
-  var counts = [
+  var countsVostok = [
     [0.00, 2.21],
     [0.51, 1.63],
     [1.01, 1.43],
@@ -143,93 +143,103 @@ window.onload = (event) => {
 
   let countsIn, countsOut;
   document.querySelector('#countsIn').addEventListener("input", (event) => {
-    countsIn = document.querySelector('#countsIn').innerText.split("\n").map(value => value.split(/\s*/).map(value2 => parseFloat(value2)))
+//    countsIn = document.querySelector('#countsIn').innerText.split("\n").map(value => value.split(/\s+/).map(value2 => value2 ? parseFloat(value2): null))
+    countsIn = document.querySelector('#countsIn').innerText.split("\n").map(line => {
+      let values = line.match(/\s*(\S+)\s+(\S+)/);
+      if (values)
+        return [parseFloat(values[1]), parseFloat(values[2])]
+    }).filter(value => value);
+
     countsOut = "<pre>" +
             countsIn.join("\n") +
             "</pre>";
     document.querySelector('#countsProcessed').innerHTML = countsOut;
+    calculateGdft(countsIn);
   });
 
-  let gdftMatrix = [[[]]],
-  span = counts[counts.length - 1][0] - counts[0][0];
-  const nNormalize = 1/Math.sqrt(counts.length);
-  
-  for (let i = 0; i < counts.length; i++) {
-    gdftMatrix[i] = [];
-    for (let j = 0; j < counts.length; j++) {
-      gdftMatrix[i][j] = [
-        nNormalize * Math.cos(2 * Math.PI * i * counts[j][0] / span),
-        -nNormalize * Math.sin(2 * Math.PI * i * counts[j][0] / span)
-      ];
-    }
-  }
+  const calculateGdft = (counts) => {
+    let gdftMatrix = [[[]]],
+            span = counts[counts.length - 1][0] - counts[0][0];
+    const nNormalize = 1 / Math.sqrt(counts.length);
 
-  let ortogonality = [[]], rowSum;
-  let ortogonalityTable = "";
-  let ortogonalityAmplitude;
-  let ortogonalityAmplitudeColor;
-  for (let i = 0; i < counts.length; i++) {
-    ortogonality[i] = [];
-    ortogonalityTable += `<tr>`;
-    for (let j = 0; j < counts.length; j++) {
-      ortogonality[i][j] = [0, 0];
-      for (let k = 0; k < counts.length; k++) {
+    for (let i = 0; i < counts.length; i++) {
+      gdftMatrix[i] = [];
+      for (let j = 0; j < counts.length; j++) {
+        gdftMatrix[i][j] = [
+          nNormalize * Math.cos(2 * Math.PI * i * counts[j][0] / span),
+          -nNormalize * Math.sin(2 * Math.PI * i * counts[j][0] / span)
+        ];
+      }
+    }
+
+    let ortogonality = [[]], rowSum;
+    let ortogonalityTable = "";
+    let ortogonalityAmplitude;
+    let ortogonalityAmplitudeColor;
+    for (let i = 0; i < counts.length; i++) {
+      ortogonality[i] = [];
+      ortogonalityTable += `<tr>`;
+      for (let j = 0; j < counts.length; j++) {
+        ortogonality[i][j] = [0, 0];
+        for (let k = 0; k < counts.length; k++) {
 //        ortogonality[i][j] += (gdftMatrix[i][k][0] * gdftMatrix[i][k][0] +
 //                gdftMatrix[i][k][1] * gdftMatrix[i][k][1]) *
 //                (gdftMatrix[j][k][0] * gdftMatrix[j][k][0] +
 //                gdftMatrix[j][k][1] * gdftMatrix[j][k][1]);
-        ortogonality[i][j][0] += (gdftMatrix[i][k][0] * gdftMatrix[j][k][0] +
-                gdftMatrix[i][k][1] * gdftMatrix[j][k][1]);
-        ortogonality[i][j][1] += (gdftMatrix[i][k][0] * gdftMatrix[j][k][1] -
-                 gdftMatrix[i][k][1] * gdftMatrix[j][k][0]);
-      }
+          ortogonality[i][j][0] += (gdftMatrix[i][k][0] * gdftMatrix[j][k][0] +
+                  gdftMatrix[i][k][1] * gdftMatrix[j][k][1]);
+          ortogonality[i][j][1] += (gdftMatrix[i][k][0] * gdftMatrix[j][k][1] -
+                  gdftMatrix[i][k][1] * gdftMatrix[j][k][0]);
+        }
 //      ortogonality[i][j] < 0 && console.info('negative! ', i, " ", j);
 //      ortogonality[i][j][0] = Math.sqrt(ortogonality[i][j][0]/Math.sqrt(counts.length);
-      ortogonalityAmplitude = Math.sqrt(ortogonality[i][j][0] * ortogonality[i][j][0] + ortogonality[i][j][1] * ortogonality[i][j][1]);
-      ortogonalityAmplitudeColor = Math.round(ortogonalityAmplitude*255);
-      ortogonalityTable += `<td style="background-color: rgba(${255 - ortogonalityAmplitudeColor},${ortogonalityAmplitudeColor}, 0, 1)">${ortogonality[i][j][0].toPrecision(3)} + ${ortogonality[i][j][1].toPrecision(3)}i</td>`;
+        ortogonalityAmplitude = Math.sqrt(ortogonality[i][j][0] * ortogonality[i][j][0] + ortogonality[i][j][1] * ortogonality[i][j][1]);
+        ortogonalityAmplitudeColor = Math.round(ortogonalityAmplitude * 255);
+        ortogonalityTable += `<td style="background-color: rgba(${255 - ortogonalityAmplitudeColor},${ortogonalityAmplitudeColor}, 0, 1)">${ortogonality[i][j][0].toPrecision(1)} + ${ortogonality[i][j][1].toPrecision(1)}i</td>`;
 //      gdftMatrix[i][j];
+      }
+      ortogonalityTable += `</tr>\n`;
     }
-    ortogonalityTable += `</tr>\n`;
-  }
-  let ortogonalityTableTable = document.querySelector('#ortogonalityTable');
-  let oTbody = document.createElement('tbody');
-  oTbody.innerHTML = ortogonalityTable;
-  ortogonalityTableTable.appendChild(oTbody);
+    let ortogonalityTableTable = document.querySelector('#ortogonalityTable');
+    ortogonalityTableTable.innerHTML = "";
+    let oTbody = document.createElement('tbody');
+    oTbody.innerHTML = ortogonalityTable;
+    ortogonalityTableTable.appendChild(oTbody);
 
-  let frequencies = [];
+    let frequencies = [];
 
-  for (let i = 0; i < counts.length; i++) {
-    frequencies[i] = [0, 0];
-    for (let j = 0; j < counts.length; j++) {
-      frequencies[i][0] += gdftMatrix[i][j][0] * counts[j][1];
-      frequencies[i][1] += gdftMatrix[i][j][1] * counts[j][1];
+    for (let i = 0; i < counts.length; i++) {
+      frequencies[i] = [0, 0];
+      for (let j = 0; j < counts.length; j++) {
+        frequencies[i][0] += gdftMatrix[i][j][0] * counts[j][1];
+        frequencies[i][1] += gdftMatrix[i][j][1] * counts[j][1];
+      }
     }
-  }
-  let outDiv = document.querySelector('#frequencies')
-  console.info("frequencies ", frequencies);
-  //outDiv.innerHTML = JSON.stringify(frequencies);
-  
-  let maxAmplitude = -Infinity;
-  frequencies.map((value, index) => {
-    let intensity = Math.sqrt(value[0]*value[0] + value[1]*value[1]);
-    maxAmplitude = Math.max(maxAmplitude, intensity);
-  });
-  let frag = document.createDocumentFragment();
-  frequencies.map((value, index) => {
-    let span = document.createElement('div');
-    let intensity = Math.sqrt(value[0]*value[0] + value[1]*value[1]);
-    span.style.width = intensity / maxAmplitude * document.body.clientWidth + "px";
-    span.style.height = "16px";
-    span.style.border = "1px solid";
-    span.style.backgroundColor = "lightgreen";
-    span.innerHTML = counts[index][0] + "&nbsp;" + intensity.toPrecision(4);
-    
-    frag.appendChild(span);
-    
-  })
-  let frequenciesBarsDiv = document.querySelector('#frequenciesBars');
-  frequenciesBarsDiv.appendChild(frag);
-  
+    let outDiv = document.querySelector('#frequencies')
+    console.info("frequencies ", frequencies);
+    //outDiv.innerHTML = JSON.stringify(frequencies);
 
+    let maxAmplitude = -Infinity;
+    frequencies.map((value, index) => {
+      let intensity = Math.sqrt(value[0] * value[0] + value[1] * value[1]);
+      maxAmplitude = Math.max(maxAmplitude, intensity);
+    });
+    let frag = document.createDocumentFragment();
+    frequencies.map((value, index) => {
+      let span = document.createElement('div');
+      let intensity = Math.sqrt(value[0] * value[0] + value[1] * value[1]);
+      span.style.width = intensity / maxAmplitude * document.body.clientWidth + "px";
+      span.style.height = "16px";
+      span.style.border = "1px solid";
+      span.style.backgroundColor = "lightgreen";
+      span.innerHTML = counts[index][0] + "&nbsp;" + intensity.toPrecision(4);
+
+      frag.appendChild(span);
+
+    })
+    let frequenciesBarsDiv = document.querySelector('#frequenciesBars');
+    frequenciesBarsDiv.innerHTML = "";
+    frequenciesBarsDiv.appendChild(frag);
+  }
+  calculateGdft(countsVostok);
 }
