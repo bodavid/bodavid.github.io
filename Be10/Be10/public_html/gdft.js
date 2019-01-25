@@ -143,7 +143,6 @@ window.onload = (event) => {
 
   let countsIn, countsOut;
   document.querySelector('#countsIn').addEventListener("input", (event) => {
-//    countsIn = document.querySelector('#countsIn').innerText.split("\n").map(value => value.split(/\s+/).map(value2 => value2 ? parseFloat(value2): null))
     countsIn = document.querySelector('#countsIn').innerText.split("\n").map(line => {
       let values = line.match(/\s*(\S+)\s+(\S+)/);
       if (values)
@@ -182,21 +181,14 @@ window.onload = (event) => {
       for (let j = 0; j < counts.length; j++) {
         ortogonality[i][j] = [0, 0];
         for (let k = 0; k < counts.length; k++) {
-//        ortogonality[i][j] += (gdftMatrix[i][k][0] * gdftMatrix[i][k][0] +
-//                gdftMatrix[i][k][1] * gdftMatrix[i][k][1]) *
-//                (gdftMatrix[j][k][0] * gdftMatrix[j][k][0] +
-//                gdftMatrix[j][k][1] * gdftMatrix[j][k][1]);
           ortogonality[i][j][0] += (gdftMatrix[i][k][0] * gdftMatrix[j][k][0] +
                   gdftMatrix[i][k][1] * gdftMatrix[j][k][1]);
           ortogonality[i][j][1] += (gdftMatrix[i][k][0] * gdftMatrix[j][k][1] -
                   gdftMatrix[i][k][1] * gdftMatrix[j][k][0]);
         }
-//      ortogonality[i][j] < 0 && console.info('negative! ', i, " ", j);
-//      ortogonality[i][j][0] = Math.sqrt(ortogonality[i][j][0]/Math.sqrt(counts.length);
         ortogonalityAmplitude = Math.sqrt(ortogonality[i][j][0] * ortogonality[i][j][0] + ortogonality[i][j][1] * ortogonality[i][j][1]);
         ortogonalityAmplitudeColor = Math.round(ortogonalityAmplitude * 255);
         ortogonalityTable += `<td style="background-color: rgba(${255 - ortogonalityAmplitudeColor},${ortogonalityAmplitudeColor}, 0, 1)">${ortogonality[i][j][0].toPrecision(1)} + ${ortogonality[i][j][1].toPrecision(1)}i</td>`;
-//      gdftMatrix[i][j];
       }
       ortogonalityTable += `</tr>\n`;
     }
@@ -217,7 +209,6 @@ window.onload = (event) => {
     }
     let outDiv = document.querySelector('#frequencies')
     console.info("frequencies ", frequencies);
-    //outDiv.innerHTML = JSON.stringify(frequencies);
 
     let maxAmplitude = -Infinity;
     frequencies.map((value, index) => {
