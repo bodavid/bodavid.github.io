@@ -158,15 +158,15 @@ window.onload = (event) => {
 
   const calculateGdft = (counts) => {
     let gdftMatrix = [[[]]],
-            span = counts[counts.length - 1][0] - counts[0][0];
+            inSpan = counts[counts.length - 1][0] - counts[0][0];
     const nNormalize = 1 / Math.sqrt(counts.length);
 
     for (let i = 0; i < counts.length; i++) {
       gdftMatrix[i] = [];
       for (let j = 0; j < counts.length; j++) {
         gdftMatrix[i][j] = [
-          nNormalize * Math.cos(2 * Math.PI * i * counts[j][0] / span),
-          -nNormalize * Math.sin(2 * Math.PI * i * counts[j][0] / span)
+          nNormalize * Math.cos(2 * Math.PI * i * counts[j][0] / inSpan),
+          -nNormalize * Math.sin(2 * Math.PI * i * counts[j][0] / inSpan)
         ];
       }
     }
@@ -223,7 +223,7 @@ window.onload = (event) => {
       span.style.height = "16px";
       span.style.border = "1px solid";
       span.style.backgroundColor = "lightgreen";
-      span.innerHTML = counts[index][0] + "&nbsp;" + intensity.toPrecision(4);
+      span.innerHTML = counts[index][0] + "&nbsp;" + (inSpan / (index + 1)).toPrecision(3) + "&nbsp;" + intensity.toPrecision(4);
 
       frag.appendChild(span);
 
