@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="module" src="PipeTurner.js"></script>
+    </head>
+    <body>
+        <h1>Design tool for curved pipes</h1>
+        <p>Design parameters. Sizes are realtive outer containing length = 1.0. The cross section normal is thought to be perpendicular to flow, and this is ambiguous. 
+            Here it is implemented as the normal being the direction of the center of the pipe since flow cross section should not vary, in order to avoid convective speed changes. 
+            Philosophical reflections on this choise are welcome. The basic theory originates from the 1950 molecular theory of fluids.
+        </p>
+        <div>Pipe radius <span contenteditable="true" id="pipeRadius">0.01</span></div>
+        <div>Pipe radius gradient <span contenteditable="true" id="pipeRadius">-0.1</span></div>
+        <div>Innermost helical radius <span contenteditable="true" id="pipeRadius">0.04</span></div>
+        <div>Innermost helical wavelength <span contenteditable="true" id="pipeRadius">0.16</span></div>
+        <div>Second innermost helical radius <span contenteditable="true" id="pipeRadius">0.14</span></div>
+        <div>Second innermost helical wavelength <span contenteditable="true" id="Second innermost helical wavelength">0.96</span></div>
+
+        <button>
+            Save mesh as STL file.
+        </button>
+    </body>
+</html>
+<script>
+    // import {PipeTurner} from "PipeTurner.js";
+    onload = () => {
+        import("PipeTurner.js").then((module) => {
+            let PipeTurner = module;
+            initialize();
+        });
+
+    }
+    let initialize = () => {
+        pipeTurner = new PipeTurner();
+        document.getElementsByTagName("body")[0].addEventListener("input", function() {
+            let property = this.event.target.parent.innerText;
+            console.log("input event fired. Value = ", this.innerText);
+            if (property.indexOf("Pipe radius")) {
+                pipeTurner.radius[0] = parseFloat(this.event.target.innerText);
+            }
+            if (property.indexOf("Pipe radius")) {
+                pipeTurner.radius[0] = parseFloat(this.event.target.innerText);
+            }
+        }, false);
+        document.getElementsByTagName("button")[0].addEventListener("click", function() {
+            console.log("Saving. Value = ", this.innerText);
+            pipeTurner.getSTL();
+        }, false);
+
+    }
+</script>
