@@ -1,10 +1,10 @@
-export let PipeTurner = function(parameters) {
-    let pipeTurnerThis = this;
+export let PipeBender = function(parameters) {
+    let pipeBenderThis = this;
     this.radius = [];
     this.radiusGradient = [];
     this.helicity = [];
     this.stepLength = [];
-    this.name = parameters?.name || "pipeTurn_" + new Date().toISOString().replace(/:/g, "-"); 
+    this.name = parameters?.name || "pipeBends_" + new Date().toISOString().replace(/:/g, "-"); 
 
     let download = (content, fileName, type) => {
         var a = document.createElement("a");
@@ -17,8 +17,8 @@ export let PipeTurner = function(parameters) {
     }
 
     this.getSTL = () => {
-        let sTLstart = `solid ` + pipeTurnerThis.name;
-        download(sTLstart, pipeTurnerThis.name + ".stl", "application/sla" )
+        let sTLstart = `solid ` + pipeBenderThis.name;
+        download(sTLstart, pipeBenderThis.name + ".stl", "application/sla" )
     }
 
 }

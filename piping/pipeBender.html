@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script type="module" src="/PipeTurner.js"></script>
+        <script type="module" src="/PipeBender.js"></script>
     </head>
     <body>
         <h1>Design tool for curved pipes</h1>
@@ -22,29 +22,29 @@
     </body>
 </html>
 <script type="module">
-    import {PipeTurner} from "./PipeTurner.js";
+    import {PipeBender} from "./PipeBender.js";
     window.onload = () => {
-        // import("PipeTurner.js").then((module) => {
-        //     let PipeTurner = module;
+        // import("PipeBender.js").then((module) => {
+        //     let PipeBender = module;
             initialize();
         // });
 
     }
     let initialize = () => {
-        let pipeTurner = new PipeTurner();
+        let pipeBender = new PipeBender();
         document.getElementsByTagName("body")[0].addEventListener("input", function() {
             let property = this.event.target.parent.innerText;
             console.log("input event fired. Value = ", this.innerText);
             if (property.indexOf("Pipe radius")) {
-                pipeTurner.radius[0] = parseFloat(this.event.target.innerText);
+                pipeBender.radius[0] = parseFloat(this.event.target.innerText);
             }
             if (property.indexOf("Pipe radius")) {
-                pipeTurner.radius[0] = parseFloat(this.event.target.innerText);
+                pipeBender.radius[0] = parseFloat(this.event.target.innerText);
             }
         }, false);
         document.getElementsByTagName("button")[0].addEventListener("click", function() {
             console.log("Saving. Value = ", this.innerText);
-            pipeTurner.getSTL();
+            pipeBender.getSTL();
         }, false);
 
     }
