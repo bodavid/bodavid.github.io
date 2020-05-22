@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script type="module" src="PipeTurner.js"></script>
+        <script type="module" src="/PipeTurner.js"></script>
     </head>
     <body>
         <h1>Design tool for curved pipes</h1>
@@ -21,17 +21,17 @@
         </button>
     </body>
 </html>
-<script>
-    // import {PipeTurner} from "PipeTurner.js";
-    onload = () => {
-        import("PipeTurner.js").then((module) => {
-            let PipeTurner = module;
+<script type="module">
+    import {PipeTurner} from "./PipeTurner.js";
+    window.onload = () => {
+        // import("PipeTurner.js").then((module) => {
+        //     let PipeTurner = module;
             initialize();
-        });
+        // });
 
     }
     let initialize = () => {
-        pipeTurner = new PipeTurner();
+        let pipeTurner = new PipeTurner();
         document.getElementsByTagName("body")[0].addEventListener("input", function() {
             let property = this.event.target.parent.innerText;
             console.log("input event fired. Value = ", this.innerText);
