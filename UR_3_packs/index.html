@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Uncertainty Relation Testing</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="./ur_3_packs.css" rel="stylesheet" type="text/css">
+    <script src="./UR_3_packs.js"></script>
+
+  </head>
+  <body onload="myUrPacks = new UncertaintyRelationsPackets();">
+    <!--<div id="background">Draft version! Do not spread yet!</div>-->
+    <div class="container containerTop">
+      Absolute sense of frequency uncertainty relation test
+    </div>
+    <div class="container containerTop">
+      Position the second and third pulse
+    </div>
+    <div  class="container containerTop">
+      <button id="play3packs">Play three packets</button>
+    </div>
+    <div  class="container containerTop">
+      <button id="play3packsReplay">Replay sound</button> in case you missed hearing.
+    </div>
+    <div class="container">
+      <span>Your three packets uncertainty relation is &nbsp;</span><span id="ur3p">2</span> 
+    </div>
+    <div class="container containerTop">
+        <canvas id="sineCanvas" style="width: 100px; height: 100px;" width="100" height="100"></canvas>
+    </div>
+
+    <div class="allBlocks">
+      <div class="container containerTop">
+        <div class="first"></div>
+        <div class="second"></div>
+        <div class="third"></div>
+      </div>
+      <div class="container containerMid">
+        <div class="first"></div>
+        <div class="second">
+        </div>
+        <div class="third"></div>
+      </div>
+      <div class="container containerBottom">
+        <div class="first"></div>
+        <div class="second"></div>
+        <div class="third"></div>
+      </div>
+    </div>
+    
+    <div>
+      <pre>
+        
+      </pre>
+    </div>
+    
+  <hr>
+    
+    <div class="container containerTop">
+      Relative sense of pitch uncertainty relation test
+    </div>
+    <div  class="container containerTop">
+      <button id="play2packs">Play two packets</button>
+    </div>
+    <div class="container containerTop">
+      Determine the relation between two pulses
+    </div>
+    <div  class="container containerTop packs2">
+      <button id="FrequencyDifferentTimeDifferent">Frequency and time difference</button>
+    </div>
+    <div  class="container containerTop packs2">
+      <button id="FrequencyDifferentTimeSame">Frequency difference at the same time</button>
+    </div>
+    <div  class="container containerTop packs2">
+      <button id="FrequencySameTimeDifferent">Frequency the same and time differences</button>
+    </div>
+    <div  class="container containerTop packs2">
+      <button id="FrequencySameTimeSame">Frequency and time the same, like one tone only</button>
+    </div>
+    <div  class="container displayUr packs2">
+      <span>Your two packets uncertainty relation is &nbsp;</span><span id="ur2p">2</span> 
+    </div>
+    
+    
+    
+    
+  </body>
+</html>
+
+  
+          
+          
+
+
+
